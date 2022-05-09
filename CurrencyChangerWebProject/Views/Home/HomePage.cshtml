@@ -1,0 +1,10 @@
+﻿
+@if (User.Identity.IsAuthenticated)
+{
+
+}
+else
+{
+    <a class="reg-link" asp-controller="Registration"asp-action="Register">Registration</a>
+    <a class="reg-link" asp-controller="LoginIn" asp-action="LoginIn">Login In</a>
+}

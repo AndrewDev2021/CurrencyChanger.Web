@@ -11,6 +11,8 @@ namespace CurrencyChangerWebProject
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc();
+
+            
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -24,7 +26,7 @@ namespace CurrencyChangerWebProject
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapControllerRoute("default", "{controller=Home}/{action=Index}/{id?}");
+                endpoints.MapControllerRoute("default", "{controller=Home}/{action=HomePage}/{id?}");
             });
         }
     }

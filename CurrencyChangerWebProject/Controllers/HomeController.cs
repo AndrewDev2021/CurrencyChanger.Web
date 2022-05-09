@@ -1,10 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using CurrencyChangerWebProject.Model;
+using Microsoft.AspNetCore.Mvc;
 
 namespace CurrencyChangerWebProject.Controllers
 {
     public class HomeController : Controller
     {
-        public IActionResult Index()
+        public IActionResult HomePage()
         {
             return View();
         }
