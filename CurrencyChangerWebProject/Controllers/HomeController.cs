@@ -5,6 +5,7 @@ namespace CurrencyChangerWebProject.Controllers
 {
     public class HomeController : Controller
     {
+        [Route("/")]
         public IActionResult HomePage()
         {
             return View();

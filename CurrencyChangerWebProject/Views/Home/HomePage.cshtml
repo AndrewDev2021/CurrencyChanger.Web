@@ -1,10 +1,9 @@
-﻿
-@if (User.Identity.IsAuthenticated)
+﻿@if (!User.Identity.IsAuthenticated)
 {
-
+    <a class="reg-link" asp-controller="Registration" asp-action="Register">Registration</a>
+    <a class="reg-link" asp-controller="Login" asp-action="LogIn">LogIn</a>
 }
 else
 {
-    <a class="reg-link" asp-controller="Registration"asp-action="Register">Registration</a>
-    <a class="reg-link" asp-controller="LoginIn" asp-action="LoginIn">Login In</a>
+    <p>Hello, @User.Claims.Single(s=>s.Type=="email").Value!</p>
 }
