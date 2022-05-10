@@ -1,5 +1,137 @@
-﻿.reg-link {
-    position: center;
+﻿.red-link {
+    color: red;
+    font-size: 13px;
+    font-style: italic;
+}
+
+.btn-login {
+    padding: 5px 10px;
+    display: inline-block;
+    text-decoration: none;
+    background: #1E90FF;
+    border-radius: 3px;
+    color: white;
     font-size: 30px;
-    font-family: fantasy
+}
+
+.btn-reg {
+    padding: 5px 10px;
+    display: inline-block;
+    text-decoration: none;
+    background: #0000FF;
+    border-radius: 3px;
+    color: white;
+    font-size: 30px;
+}
+
+.reg-log {
+    text-align: center;
+    margin-top: 4px;
+}
+
+.home-greating {
+    margin-top: 10%;
+    text-align: center;
+    padding: 10px 10px;
+    background: #1e90ff;
+    color: white;
+    border-radius: 5px;
+}
+
+input[type=text], input[type=password], input[type=email] {
+    width: 100%;
+    padding: 15px;
+    margin: 5px 0 22px 0;
+    display: inline-block;
+    border: none;
+    background: #f1f1f1;
+}
+
+/* Add a background color when the inputs get focus */
+input[type=text]:focus, input[type=password]:focus ,input[type=email]:focus {
+    background-color: #ddd;
+    outline: none;
+}
+
+/* Установите стиль для всех кнопок */
+button {
+    background-color: blue;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+    opacity: 0.9;
+}
+
+button:hover {
+    opacity: 1;
+}
+
+.container {
+    padding: 16px;
+}
+
+/* Модальный (фон) */
+.modal {
+    display: none; /* Скрыто по умолчанию */
+    position: fixed; /* Оставаться на месте */
+    z-index: 1; /* Сидеть на вершине */
+    left: 0;
+    top: 0;
+    width: 100%; /* Полная ширина */
+    height: 100%; /* Полная высота */
+    overflow: auto; /* Включите прокрутку, если это необходимо */
+    background-color: #474e5d;
+    padding-top: 50px;
+}
+
+/* Модальное содержание/бокс */
+.modal-content {
+    background-color: #fefefe;
+    margin: 5% auto 15% auto; /* 5% сверху, 15% снизу и по центру */
+    border: 1px solid #888;
+    width: 80%; /* Может быть больше или меньше, в зависимости от размера экрана */
+}
+
+/* Style the horizontal ruler */
+hr {
+    border: 1px solid #f1f1f1;
+    margin-bottom: 25px;
+}
+
+/* Кнопка закрытия (x) */
+.close {
+    position: absolute;
+    right: 35px;
+    top: 15px;
+    font-size: 40px;
+    font-weight: bold;
+    color: #f1f1f1;
+}
+
+.close:hover,
+.close:focus {
+    color: #f44336;
+    cursor: pointer;
+}
+
+/* Clear floats */
+.clearfix::after {
+    content: "";
+    clear: both;
+    display: table;
+}
+
+/* Change styles for cancel button and signup button on extra small screens */
+@media screen and (max-width: 300px) {
+    .signupbtn {
+        width: 100%;
+    }
+}
+
+
+.reg-log-label {
+    font-weight: bold;
 }

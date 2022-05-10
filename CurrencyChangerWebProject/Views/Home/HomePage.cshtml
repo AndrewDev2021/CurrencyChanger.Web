@@ -1,7 +1,17 @@
 ﻿@if (!User.Identity.IsAuthenticated)
 {
-    <a class="reg-link" asp-controller="Registration" asp-action="Register">Registration</a>
-    <a class="reg-link" asp-controller="Login" asp-action="LogIn">LogIn</a>
+    <div class="reg-log">
+        <a asp-controller="Registration" asp-action="Register" class="btn-reg">Registration</a>
+        <a asp-controller="Login" asp-action="LogIn" class="btn-login">Log In</a>
+    </div>
+    <div class="home-greating">
+        <h1>
+            We are here to welcome you to our resource.
+        </h1>
+        <h3>
+            To use currency exchange, please register or log in to the system
+        </h3>
+    </div>
 }
 else
 {

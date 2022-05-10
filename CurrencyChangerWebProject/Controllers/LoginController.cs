@@ -10,7 +10,7 @@ namespace CurrencyChangerWebProject.Controllers
 {
     public class LoginController : Controller
     {
-        [HttpGet("login")]
+        [HttpGet("/login")]
         public IActionResult LogIn()
         {
             if (HttpContext.User.Identity.IsAuthenticated)
@@ -24,19 +24,7 @@ namespace CurrencyChangerWebProject.Controllers
 
             //check creds
 
-            await Authenticate(loginIn);
             return LocalRedirect("~/");
-        }
-
-        private async Task Authenticate(LoginIn loginIn)
-        {
-            var claims = new List<Claim>
-            {
-                new Claim("email", loginIn.Email),
-                new Claim("password", loginIn.Password)
-            };
-            ClaimsIdentity id = new ClaimsIdentity(claims, "ApplicationCookie", ClaimsIdentity.DefaultNameClaimType, ClaimsIdentity.DefaultRoleClaimType);
-            await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(id));
         }
     }
 }

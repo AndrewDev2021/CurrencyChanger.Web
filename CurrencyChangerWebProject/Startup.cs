@@ -12,12 +12,6 @@ namespace CurrencyChangerWebProject
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
-                .AddCookie(options =>
-                {
-                    options.LoginPath = new PathString("/Account/Login");
-                });
-
             services.AddMvc();
         }
 
@@ -27,6 +21,8 @@ namespace CurrencyChangerWebProject
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            app.UseStaticFiles();
 
             app.UseRouting();
 
