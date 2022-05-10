@@ -1,4 +1,5 @@
-﻿using CurrencyChangerWebProject.Model;
+﻿using CurrencyChangerWebProject.Domain;
+using CurrencyChangerWebProject.Model;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CurrencyChangerWebProject.Controllers
@@ -17,7 +18,13 @@ namespace CurrencyChangerWebProject.Controllers
         {
             if (ModelState.IsValid)
             {
-                return View("Accept", info);
+                
+                using (AppDbContext db = new AppDbContext())
+                {
+                    db.Users.Add(info);
+                    db.SaveChanges();
+                    return View("Accept", info);
+                }
             }
 
             return View();

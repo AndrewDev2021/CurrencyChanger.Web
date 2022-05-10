@@ -13,18 +13,7 @@ namespace CurrencyChangerWebProject.Controllers
         [HttpGet("/login")]
         public IActionResult LogIn()
         {
-            if (HttpContext.User.Identity.IsAuthenticated)
-                return LocalRedirect("~/");
             return View();
-        }
-
-        [HttpPost("login")]
-        public async Task<IActionResult> LogIn(LoginIn loginIn)
-        {
-
-            //check creds
-
-            return LocalRedirect("~/");
         }
     }
 }
