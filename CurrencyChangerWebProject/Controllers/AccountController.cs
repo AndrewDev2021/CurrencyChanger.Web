@@ -3,6 +3,7 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using CurrencyChangerWebProject.Domain;
 using CurrencyChangerWebProject.Model;
+using CurrencyChangerWebProject.Services;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
@@ -33,7 +34,8 @@ namespace CurrencyChangerWebProject.Controllers
         {
             if (ModelState.IsValid)
             {
-                Registation user = await _context.Users.FirstOrDefaultAsync(u => u.Email == info.Email && u.Password == info.Password);
+                Registation user = await _context.Users.FirstOrDefaultAsync(u => u.Email == info.Email 
+                    && u.Password == Hashing.GetHashString(info.Password));
                 if (user != null)
                 {
                     await Authenticate(info.Email); // аутентификация
@@ -61,6 +63,8 @@ namespace CurrencyChangerWebProject.Controllers
                 Registation user = await _context.Users.FirstOrDefaultAsync(u => u.Email == info.Email);
                 if (user == null)
                 {
+                    info.Password = Hashing.GetHashString(info.Password);
+
                     _context.Users.Add(info);
                     await _context.SaveChangesAsync();
                     await Authenticate(info.Email);

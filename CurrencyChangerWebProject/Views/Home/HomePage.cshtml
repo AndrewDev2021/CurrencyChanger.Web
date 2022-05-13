@@ -18,5 +18,13 @@ else
     <div class="reg-log">
         <a asp-controller="Account" asp-action="Logout" class="btn-reg">Log Out</a>
     </div>
-    <p>Hello, @User.Claims.Single(s=>s.Type== ClaimsIdentity.DefaultNameClaimType).Value!</p>
+
+    <div class="home-greating">
+        <h1>
+            Hello, @User.Identity.Name
+        </h1>
+        <h3>
+            Now you can use the functions of our resource
+        </h3>
+    </div>
 }
