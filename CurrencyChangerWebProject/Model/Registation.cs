@@ -27,7 +27,7 @@ namespace CurrencyChangerWebProject.Model
 
         [Display(Name = "Password")]
         [Required(ErrorMessage = "Enter the password")]
-        [RegularExpression(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^a-zA-Z0-9])\S{1,16}$")]
+        [RegularExpression(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])\S{1,16}$")]
         public string Password { get; set; }
 
         [Display(Name = "Confirm Password")]

@@ -1,14 +1,18 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Security.Cryptography.X509Certificates;
-using CurrencyChangerWebProject.Domain;
-using CurrencyChangerWebProject.Model;
+﻿using CurrencyChangerWebProject.Domain;
 using Microsoft.AspNetCore.Mvc;
+using System.Linq;
 
 namespace CurrencyChangerWebProject.Controllers
 {
     public class HomeController : Controller
     {
+        private AppDbContext _context;
+
+        public HomeController(AppDbContext context)
+        {
+            _context = context;
+        }
+
         [Route("/")]
         public IActionResult HomePage()
         {
@@ -19,12 +23,11 @@ namespace CurrencyChangerWebProject.Controllers
         [Route("/show")]
         public IActionResult ShowUsers()
         {
-            using (AppDbContext db = new AppDbContext())
-            {
-                var users = db.Users.First();
 
-                return View(users);
-            }
+            var users = _context.Users.First();
+
+            return View(users);
+
         }
     }
 }

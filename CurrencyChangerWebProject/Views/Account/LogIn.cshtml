@@ -1,19 +1,19 @@
-﻿@model LoginIn
+﻿@model LogIn
 
 @{
     ViewData["Title"] = "LogIn";
 }
 
-<form class="modal-content" asp-controller="Login" asp-action="LogIn">
+<form class="modal-content" asp-controller="Account" asp-action="LogIn">
     <div class="container">
         <h1>Log In</h1>
         
         <hr>
         <label class="reg-log-label" asp-for="Email"></label>
-        <input asp-for="Email" type="email" placeholder=" Ведите Email">
+        <input asp-for="Email" type="email" placeholder="Enter your email address">
 
         <label class="reg-log-label" asp-for="Password"></label>
-        <input asp-for="Password" type="password" placeholder=" Ведите пароль">
+        <input asp-for="Password" type="password" placeholder="Enter your password">
 
         <div class="clearfix">
             <button type="submit" class="signupbtn">Log In</button>

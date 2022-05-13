@@ -2,7 +2,7 @@
 
 namespace CurrencyChangerWebProject.Model
 {
-    public class LoginIn
+    public class LogIn
     {
         [Display(Name = "Email Address")]
         public string Email { get; set; }

@@ -1,8 +1,8 @@
 ﻿@if (!User.Identity.IsAuthenticated)
 {
     <div class="reg-log">
-        <a asp-controller="Registration" asp-action="Register" class="btn-reg">Registration</a>
-        <a asp-controller="Login" asp-action="LogIn" class="btn-login">Log In</a>
+        <a asp-controller="Account" asp-action="Register" class="btn-reg">Registration</a>
+        <a asp-controller="Account" asp-action="LogIn" class="btn-login">Log In</a>
     </div>
     <div class="home-greating">
         <h1>
@@ -15,5 +15,8 @@
 }
 else
 {
-    <p>Hello, @User.Claims.Single(s=>s.Type=="email").Value!</p>
+    <div class="reg-log">
+        <a asp-controller="Account" asp-action="Logout" class="btn-reg">Log Out</a>
+    </div>
+    <p>Hello, @User.Claims.Single(s=>s.Type== ClaimsIdentity.DefaultNameClaimType).Value!</p>
 }
