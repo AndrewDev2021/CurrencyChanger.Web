@@ -1,9 +1,9 @@
-﻿@if (!User.Identity.IsAuthenticated)
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+@if (!User.Identity.IsAuthenticated)
 {
-    <div class="reg-log">
-        <a asp-controller="Account" asp-action="Register" class="btn-reg">Registration</a>
-        <a asp-controller="Account" asp-action="LogIn" class="btn-login">Log In</a>
-    </div>
     <div class="home-greating">
         <h1>
             We are here to welcome you to our resource.
@@ -15,10 +15,6 @@
 }
 else
 {
-    <div class="reg-log">
-        <a asp-controller="Account" asp-action="Logout" class="btn-reg">Log Out</a>
-    </div>
-
     <div class="home-greating">
         <h1>
             Hello, @User.Identity.Name

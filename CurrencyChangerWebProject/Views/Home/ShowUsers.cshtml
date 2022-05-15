@@ -1,7 +1,10 @@
-﻿@model Registation
+﻿@model List<Registation>
 
-<p>@Model.FirstName</p>
-<p>@Model.LastName</p>
-<p>@Model.Email</p>
-<p>@Model.Age</p>
-<p>@Model.Password</p>
+@foreach (var item in Model)
+{
+    <p>@item.FirstName</p>
+    <p>@item.LastName</p>
+    <p>@item.Email</p>
+    <p>@item.Age</p>
+    <p>@item.Password</p>
+}

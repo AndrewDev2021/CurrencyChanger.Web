@@ -6,31 +6,36 @@
 
 .btn-login {
     padding: 5px 10px;
-    display: inline-block;
-    text-decoration: none;
     background: #1E90FF;
     border-radius: 3px;
-    color: white;
-    font-size: 30px;
 }
 
 .btn-reg {
     padding: 5px 10px;
-    display: inline-block;
-    text-decoration: none;
     background: #0000FF;
     border-radius: 3px;
-    color: white;
-    font-size: 30px;
 }
 
-.reg-log {
-    text-align: center;
-    margin-top: 4px;
+
+#main-log {
+    position: absolute;
+    right: 40%;
+    top: 7px;
+    font-size: 30px;
+    font-family:monospace;
+    font-style: inherit;
+    font-weight: bold;
+    text-shadow: #dddddd 1px 2px 3px;
+}
+
+#reg-log {
+    position: absolute;
+    right: 10px;
+    top: 2px;
 }
 
 .home-greating {
-    margin-top: 10%;
+    margin-top: 17%;
     text-align: center;
     padding: 10px 10px;
     background: #1e90ff;
@@ -134,4 +139,42 @@ hr {
 
 .reg-log-label {
     font-weight: bold;
+}
+
+/*Table styles*/
+
+table {
+    font-family: "Lucida Sans Unicode", "Lucida Grande", Sans-Serif;
+    border-collapse: collapse;
+    color: #FFFACD;
+    text-shadow: #0000ff 1px 2px 3px;
+    margin: auto;
+}
+
+.caption-col {
+    padding: 10px;
+    color: #FFFFE0;
+    background: #00008B;
+    font-size: 18px;
+    text-align: center;
+    font-weight: bold;
+    caption-side: top;
+}
+
+th {
+    border-bottom: 3px solid #0000FF;
+    padding: 10px;
+    text-align: left;
+}
+
+td {
+    padding: 10px;
+}
+
+tr:nth-child(odd) {
+    background: #87CEEB;
+}
+
+tr:nth-child(even) {
+    background: #1E90FF;
 }

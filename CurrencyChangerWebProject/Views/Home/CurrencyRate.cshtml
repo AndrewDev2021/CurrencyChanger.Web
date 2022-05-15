@@ -1,0 +1,21 @@
+﻿@model List<CurrencyRate>
+
+@{
+    ViewData["Title"] = "Currency Rate";
+    ViewBag.Date = Model[0].ExchangeDate;
+}
+
+<table>
+    <caption class="caption-col">
+        Currency Rate
+    </caption>
+    <tr>
+        <th>Сurrency Name</th> <th>Currency Code</th> <th>Rate</th>
+    </tr>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@item.Txt</td> <td>@item.Cc</td> <td>@item.Rate</td>
+        </tr>
+    }
+</table>
