@@ -1,8 +1,8 @@
-﻿using CurrencyChangerWebProject.Model;
+﻿using CurrencyExсhanger.Web.Model;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.VisualStudio.Web.CodeGeneration.EntityFrameworkCore;
 
-namespace CurrencyChangerWebProject.Domain
+namespace CurrencyExсhanger.Web.Domain
 {
     public class AppDbContext: DbContext
     {

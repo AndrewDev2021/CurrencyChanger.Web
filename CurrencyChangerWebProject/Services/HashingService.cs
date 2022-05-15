@@ -1,9 +1,9 @@
 ﻿using System.Security.Cryptography;
 using System.Text;
 
-namespace CurrencyChangerWebProject.Services
+namespace CurrencyExсhanger.Web.Services
 {
-    public class Hashing
+    public class HashingService
     {
         public static string GetHashString(string password)
         {

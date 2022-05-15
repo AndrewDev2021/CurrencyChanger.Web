@@ -1,16 +1,15 @@
 ﻿using System.Collections.Generic;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using CurrencyChangerWebProject.Domain;
-using CurrencyChangerWebProject.Model;
-using CurrencyChangerWebProject.Services;
+using CurrencyExсhanger.Web.Domain;
+using CurrencyExсhanger.Web.Model;
+using CurrencyExсhanger.Web.Services;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.EntityFrameworkCore;
 
-namespace CurrencyChangerWebProject.Controllers
+namespace CurrencyExсhanger.Web.Controllers
 {
     public class AccountController : Controller
     {
@@ -20,6 +19,8 @@ namespace CurrencyChangerWebProject.Controllers
         {
             _context = context;
         }
+
+        #region LogIn-Action
 
         [HttpGet("/login")]
         public IActionResult LogIn()
@@ -34,8 +35,8 @@ namespace CurrencyChangerWebProject.Controllers
         {
             if (ModelState.IsValid)
             {
-                Registation user = await _context.Users.FirstOrDefaultAsync(u => u.Email == info.Email 
-                    && u.Password == Hashing.GetHashString(info.Password));
+                var user = await _context.Users.FirstOrDefaultAsync(u => u.Email == info.Email
+                    && u.Password == HashingService.GetHashString(info.Password));
                 if (user != null)
                 {
                     await Authenticate(info.Email); // аутентификация
@@ -46,6 +47,10 @@ namespace CurrencyChangerWebProject.Controllers
             }
             return View(info);
         }
+
+        #endregion
+
+        #region Register-Action
 
         [Route("/registration")]
         public IActionResult Register()
@@ -60,10 +65,10 @@ namespace CurrencyChangerWebProject.Controllers
         {
             if (ModelState.IsValid)
             {
-                Registation user = await _context.Users.FirstOrDefaultAsync(u => u.Email == info.Email);
+                var user = await _context.Users.FirstOrDefaultAsync(u => u.Email == info.Email);
                 if (user == null)
                 {
-                    info.Password = Hashing.GetHashString(info.Password);
+                    info.Password = HashingService.GetHashString(info.Password);
 
                     _context.Users.Add(info);
                     await _context.SaveChangesAsync();
@@ -80,23 +85,31 @@ namespace CurrencyChangerWebProject.Controllers
             return View(info);
         }
 
+        #endregion
+
+        #region LogOut-Action
         public async Task<IActionResult> Logout()
         {
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
             return RedirectToAction("HomePage", "Home");
         }
 
+        #endregion
+
+        #region Authenticate
+
         private async Task Authenticate(string userName)
         {
-            // создаем один claim
             var claims = new List<Claim>
             {
                 new Claim(ClaimsIdentity.DefaultNameClaimType, userName)
             };
-            // создаем объект ClaimsIdentity
+ 
             ClaimsIdentity id = new ClaimsIdentity(claims, "ApplicationCookie", ClaimsIdentity.DefaultNameClaimType, ClaimsIdentity.DefaultRoleClaimType);
-            // установка аутентификационных куки
+
             await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(id));
         }
+
+        #endregion
     }
 }

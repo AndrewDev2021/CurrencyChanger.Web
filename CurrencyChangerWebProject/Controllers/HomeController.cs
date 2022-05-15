@@ -1,9 +1,9 @@
-﻿using CurrencyChangerWebProject.Domain;
+﻿using CurrencyExсhanger.Web.Domain;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq;
 using Microsoft.AspNetCore.Authorization;
 
-namespace CurrencyChangerWebProject.Controllers
+namespace CurrencyExсhanger.Web.Controllers
 {
     public class HomeController : Controller
     {

@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace CurrencyChangerWebProject.Model
+namespace CurrencyExсhanger.Web.Model
 {
     public class LogIn
     {

@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore.Migrations;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
-namespace CurrencyChangerWebProject.Migrations
+namespace CurrencyExсhanger.Web.Migrations
 {
     public partial class Initial : Migration
     {
