@@ -8,24 +8,66 @@
     var listOfCurrencyCode = await currencyRateService.GetCurrenciesCodeAsync();
 }
 
-<form asp-controller="Exchange" asp-action="ExchangePage">
-    <select asp-for="CurrentCurrencyСС">
-        @foreach (var item in listOfCurrencyCode)
-        {
-            <option value="@item">@item</option>
-        }
-    </select>
-    
-    <input asp-for="CurrentCurrencyValue" type="text" placeholder="Enter the sum would you want to exchange">
+@*<h4 class="heading text-center display-2">
+    Exchange your currency!Thanks for using our service</h4>*@
 
-    <select asp-for="DesiredСurrencyСС">
-        @foreach (var item in listOfCurrencyCode)
-        {
-            <option value="@item">@item</option>
-        }
-    </select>
-    
-    <div>
-        <button type="submit">Exchange</button>
+<div class="exchange-greating">
+    <h1>
+        Exchange your currency!
+    </h1>
+    <h3>
+        Thanks for using our service
+    </h3>
+</div>
+<div class="container">
+    <form class="main" asp-controller="Exchange" asp-action="ExchangePage">
+  
+            <div class="form-group">
+                <label for="oamount">
+                    Amount to Convert : 
+                </label>
+                <input type="text" 
+                       class="form-control searchBox" 
+                       placeholder="0.00" 
+                       id="oamount"
+                       asp-for="CurrentCurrencyValue">
+            </div>
+  
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">From</span>
+                        </div>
+                        <select class="form-control from" asp-for="CurrentCurrencyСС">
+                            @foreach (var item in listOfCurrencyCode)
+                            {
+                                <option value="@item">@item</option>
+                            }
+                        </select>
+                    </div>
+                </div>
+  
+                <div class="col-sm-6">
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">To</span>
+                        </div>
+                        <select class="form-control to" asp-for="DesiredСurrencyСС">
+                            @foreach (var item in listOfCurrencyCode)
+                            {
+                              <option value="@item">@item</option>
+                            }
+                        </select>
+                    </div>
+                </div>
+            </div>
+  
+            <div class="text-center">
+                <button class="btn btn-primary convert m-2" 
+                        type="submit">
+                     Convert
+              </button>
+            </div>
+        </form>
     </div>
-</form>

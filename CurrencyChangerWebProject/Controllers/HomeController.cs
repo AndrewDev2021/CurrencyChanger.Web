@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using CurrencyExсhanger.Web.Domain;
-using Microsoft.AspNetCore.Mvc;
-using System.Linq;
-using System.Threading.Tasks;
-using CurrencyExсhanger.Web.Model;
+﻿using CurrencyExсhanger.Web.Domain;
 using CurrencyExсhanger.Web.Services;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace CurrencyExсhanger.Web.Controllers
 {
@@ -25,7 +23,11 @@ namespace CurrencyExсhanger.Web.Controllers
         [Route("/")]
         public IActionResult HomePage()
         {
+            if (User.Identity.IsAuthenticated)
+                return RedirectToAction("ExchangePage", "Exchange");
+
             return View();
+
         }
 
         [HttpGet]
@@ -45,7 +47,7 @@ namespace CurrencyExсhanger.Web.Controllers
         public async Task<IActionResult> CurrencyRate()
         {
             var listOfRates = await _currencyRateService.GetRatesAsync(DateTime.Now);
-            
+
             return View(listOfRates);
         }
 

@@ -6,15 +6,16 @@
 
 @foreach (var item in Model)
 {
-    <h1>Infomation about exchange</h1>
-    <p>Id of exchange: @item.Id</p>
-    <p>UserId: @item.UserId</p>
-    <p>RateOfExchange :@item.RateOfExchange</p>
-    <p>CurrentCurrencyСС :@item.CurrentCurrencyСС</p>
-    <p>CurrentCurrencyValue :@item.CurrentCurrencyValue</p>
-    <p>DesiredСurrencyСС: @item.DesiredСurrencyСС</p>
-    <p>DesireCurrencyValue: @item.DesireCurrencyValue</p>
-    <p>@item.time</p>
-                 <p></p>
+    <ul class="list-group">
+        <div class="h3">
+            <li class="list-group-item active" aria-current="true">Service number #@item.Id</li>
+        </div>
+        <li class="list-group-item">User Id #@item.UserId</li>
+        <li class="list-group-item">Rate of Exchange: @item.RateOfExchange</li>
+        <li class="list-group-item">Current Currency Code: @item.CurrentCurrencyСС</li>
+        <li class="list-group-item">Current Currency Value: @item.CurrentCurrencyValue</li>
+        <li class="list-group-item">Desire Currency Code: @item.DesiredСurrencyСС</li>
+        <li class="list-group-item">Desire Currency Value: @item.DesireCurrencyValue</li>
+        <li class="list-group-item">Date of Exchange: @item.time</li>
+    </ul>
 }
-

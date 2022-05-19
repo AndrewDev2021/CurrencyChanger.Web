@@ -199,3 +199,14 @@ tr:nth-child(odd) {
 tr:nth-child(even) {
     background: #1E90FF;
 }
+
+/*Exchanger Styles*/
+
+.exchange-greating {
+    margin-top: 2%;
+    text-align: center;
+    padding: 10px 10px;
+    background: #1e90ff;
+    color: white;
+    border-radius: 5px;
+}
