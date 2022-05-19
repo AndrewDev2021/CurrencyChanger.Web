@@ -1,11 +1,10 @@
-﻿using System;
+﻿using CurrencyExсhanger.Web.Model;
+using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
-using CurrencyExсhanger.Web.Model;
-using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
 
 namespace CurrencyExсhanger.Web.Services
 {
@@ -13,15 +12,15 @@ namespace CurrencyExсhanger.Web.Services
     {
         public async Task<List<CurrencyRate>> GetRatesAsync(DateTime time)
         {
-            if (time > DateTime.Now)
-            {
+            var outDate = new DateTime(01, 01, 0001);
+
+            if (time > DateTime.Now || time == outDate)
                 return new List<CurrencyRate>();
-            }
 
             var client = new HttpClient();
             var response = await client.GetAsync(GetUlr(time));
             var content = await response.Content.ReadAsStringAsync();
-            
+
             var list = JsonConvert.DeserializeObject<List<CurrencyRate>>(content);
 
             list.Add(new CurrencyRate()
@@ -39,25 +38,15 @@ namespace CurrencyExсhanger.Web.Services
         {
             var listOfRates = await GetRatesAsync(DateTime.Now);
 
-            var listOfCC = new List<string>();
-
-            foreach (var item in listOfRates)
-            {
-                listOfCC.Add(item.Cc);
-            }
-
-            return listOfCC.ToList();
+            return listOfRates.Select(item => item.Cc).ToList();
         }
 
-        public string GetUlr(DateTime time)
+        private string GetUlr(DateTime time)
         {
-            var uFormatTime = time.ToString("u");
+            var timeString = time.ToString("u").Remove(10,10);
 
-            var str= uFormatTime.Remove(10,uFormatTime.Length-10);
-
-            var url = $"https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange?date={str.Replace("-", "")}&json";
-           
-            return url;
+            return
+                $"https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange?date={timeString.Replace("-", "")}&json";
         }
     }
 }

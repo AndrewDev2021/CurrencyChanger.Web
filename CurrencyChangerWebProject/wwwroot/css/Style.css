@@ -41,6 +41,13 @@
     top: 2px;
 }
 
+.celendar {
+    text-align: center;
+    color: #2F4F4F;
+    background: #87ceeb;
+    font-size: 13px;
+}
+
 .home-greating {
     margin-top: 17%;
     text-align: center;

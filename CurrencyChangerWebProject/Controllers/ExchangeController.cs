@@ -63,8 +63,8 @@ namespace CurrencyExсhanger.Web.Controllers
 
         [HttpGet]
         [Authorize]
-        [Route("/show/exchanges")]
-        public IActionResult ShowExchange()
+        [Route("/history/exchanges")]
+        public IActionResult ExchangesHistory()
         {
             var user = _context.Users.First(item =>
                 item.Email == User.Identity.Name);

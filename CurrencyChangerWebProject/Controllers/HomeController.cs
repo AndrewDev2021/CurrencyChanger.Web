@@ -58,5 +58,12 @@ namespace CurrencyExсhanger.Web.Controllers
 
             return View(listOfRates);
         }
+
+        [HttpGet]
+        [Route("/about")]
+        public IActionResult About()
+        {
+            return View();
+        }
     }
 }
