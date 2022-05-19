@@ -10,6 +10,13 @@
     border-radius: 3px;
 }
 
+.btn-exchange {
+    display: inline-block;
+    padding: 5px 10px;
+    background: #0000FF;
+    border-radius: 3px;
+}
+
 .btn-reg {
     padding: 5px 10px;
     background: #0000FF;
@@ -41,6 +48,13 @@
     background: #1e90ff;
     color: white;
     border-radius: 5px;
+}
+
+.rate-title {
+    text-align: center;
+    padding: 10px 10px;
+    background: #A9A9A9;
+    color: white;
 }
 
 input[type=text], input[type=password], input[type=email] {

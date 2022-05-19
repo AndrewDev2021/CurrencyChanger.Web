@@ -1,0 +1,31 @@
+﻿@model ExchangeHistory
+
+@{
+    ViewData["Title"] = "Exchanger";
+
+        var currencyRateService = new CurrencyRateService();
+
+    var listOfCurrencyCode = await currencyRateService.GetCurrenciesCodeAsync();
+}
+
+<form asp-controller="Exchange" asp-action="ExchangePage">
+    <select asp-for="CurrentCurrencyСС">
+        @foreach (var item in listOfCurrencyCode)
+        {
+            <option value="@item">@item</option>
+        }
+    </select>
+    
+    <input asp-for="CurrentCurrencyValue" type="text" placeholder="Enter the sum would you want to exchange">
+
+    <select asp-for="DesiredСurrencyСС">
+        @foreach (var item in listOfCurrencyCode)
+        {
+            <option value="@item">@item</option>
+        }
+    </select>
+    
+    <div>
+        <button type="submit">Exchange</button>
+    </div>
+</form>

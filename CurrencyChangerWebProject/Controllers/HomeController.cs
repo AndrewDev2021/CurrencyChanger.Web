@@ -21,12 +21,14 @@ namespace CurrencyExсhanger.Web.Controllers
             _currencyRateService = new CurrencyRateService();
         }
 
+        [HttpGet]
         [Route("/")]
         public IActionResult HomePage()
         {
             return View();
         }
 
+        [HttpGet]
         [Authorize]
         [Route("/show")]
         public IActionResult ShowUsers()
@@ -37,6 +39,7 @@ namespace CurrencyExсhanger.Web.Controllers
 
         }
 
+        [HttpGet]
         [Authorize]
         [Route("/rate")]
         public async Task<IActionResult> CurrencyRate()

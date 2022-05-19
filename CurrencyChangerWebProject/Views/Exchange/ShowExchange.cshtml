@@ -1,0 +1,20 @@
+﻿@model List<ExchangeHistory>
+
+@{
+    ViewData["Title"] = "Show Exchange";
+}
+
+@foreach (var item in Model)
+{
+    <h1>Infomation about exchange</h1>
+    <p>Id of exchange: @item.Id</p>
+    <p>UserId: @item.UserId</p>
+    <p>RateOfExchange :@item.RateOfExchange</p>
+    <p>CurrentCurrencyСС :@item.CurrentCurrencyСС</p>
+    <p>CurrentCurrencyValue :@item.CurrentCurrencyValue</p>
+    <p>DesiredСurrencyСС: @item.DesiredСurrencyСС</p>
+    <p>DesireCurrencyValue: @item.DesireCurrencyValue</p>
+    <p>@item.time</p>
+                 <p></p>
+}
+

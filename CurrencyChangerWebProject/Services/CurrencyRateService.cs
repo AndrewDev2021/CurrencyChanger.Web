@@ -1,7 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 using CurrencyExсhanger.Web.Model;
+using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 
 namespace CurrencyExсhanger.Web.Services
@@ -15,8 +18,32 @@ namespace CurrencyExсhanger.Web.Services
             var client = new HttpClient();
             var response = await client.GetAsync(CurrencyRateApiUrl);
             var content = await response.Content.ReadAsStringAsync();
+            
+            var list = JsonConvert.DeserializeObject<List<CurrencyRate>>(content);
 
-            return JsonConvert.DeserializeObject<List<CurrencyRate>>(content);
+            list.Add(new CurrencyRate()
+            {
+                Cc = "UAH",
+                ExchangeDate = (DateTime.Now).ToString(),
+                Rate = 1,
+                Txt = "Гривня"
+            });
+
+            return list;
+        }
+
+        public async Task<List<string>> GetCurrenciesCodeAsync()
+        {
+            var listOfRates = await GetRatesAsync();
+
+            var listOfCC = new List<string>();
+
+            foreach (var item in listOfRates)
+            {
+                listOfCC.Add(item.Cc);
+            }
+
+            return listOfCC.ToList();
         }
     }
 }

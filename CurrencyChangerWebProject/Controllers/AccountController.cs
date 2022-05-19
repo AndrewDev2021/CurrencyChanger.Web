@@ -6,6 +6,7 @@ using CurrencyExсhanger.Web.Model;
 using CurrencyExсhanger.Web.Services;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -22,7 +23,8 @@ namespace CurrencyExсhanger.Web.Controllers
 
         #region LogIn-Action
 
-        [HttpGet("/login")]
+        [HttpGet]
+        [Route("/login")]
         public IActionResult LogIn()
         {
             return View();
@@ -31,27 +33,28 @@ namespace CurrencyExсhanger.Web.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Route("/login")]
-        public async Task<IActionResult> Login(LogIn info)
+        public async Task<IActionResult> Login(LogIn data)
         {
             if (ModelState.IsValid)
             {
-                var user = await _context.Users.FirstOrDefaultAsync(u => u.Email == info.Email
-                    && u.Password == HashingService.GetHashString(info.Password));
+                var user = await _context.Users.FirstOrDefaultAsync(u => u.Email == data.Email
+                    && u.Password == HashingService.GetHashString(data.Password));
                 if (user != null)
                 {
-                    await Authenticate(info.Email); // аутентификация
+                    await Authenticate(data.Email); // аутентификация
 
                     return RedirectToAction("HomePage", "Home");
                 }
                 ModelState.AddModelError("", "Incorrect username or password");
             }
-            return View(info);
+            return View(data);
         }
 
         #endregion
 
         #region Register-Action
 
+        [HttpGet]
         [Route("/registration")]
         public IActionResult Register()
         {
@@ -61,18 +64,18 @@ namespace CurrencyExсhanger.Web.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Route("/registration")]
-        public async Task<IActionResult> Register(Registation info)
+        public async Task<IActionResult> Register(Registation data)
         {
             if (ModelState.IsValid)
             {
-                var user = await _context.Users.FirstOrDefaultAsync(u => u.Email == info.Email);
+                var user = await _context.Users.FirstOrDefaultAsync(u => u.Email == data.Email);
                 if (user == null)
                 {
-                    info.Password = HashingService.GetHashString(info.Password);
+                    data.Password = HashingService.GetHashString(data.Password);
 
-                    _context.Users.Add(info);
+                    await _context.Users.AddAsync(data);
                     await _context.SaveChangesAsync();
-                    await Authenticate(info.Email);
+                    await Authenticate(data.Email);
 
                     return RedirectToAction("HomePage", "Home");
                 }
@@ -82,12 +85,15 @@ namespace CurrencyExсhanger.Web.Controllers
                 }
             }
 
-            return View(info);
+            return View(data);
         }
 
         #endregion
 
         #region LogOut-Action
+
+        [HttpGet]
+        [Authorize]
         public async Task<IActionResult> Logout()
         {
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
