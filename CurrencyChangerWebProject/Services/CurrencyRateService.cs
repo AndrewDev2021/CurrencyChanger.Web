@@ -11,12 +11,15 @@ namespace CurrencyExсhanger.Web.Services
 {
     public class CurrencyRateService
     {
-        private const string CurrencyRateApiUrl = "https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange?json";
-
-        public async Task<List<CurrencyRate>> GetRatesAsync()
+        public async Task<List<CurrencyRate>> GetRatesAsync(DateTime time)
         {
+            if (time > DateTime.Now)
+            {
+                return new List<CurrencyRate>();
+            }
+
             var client = new HttpClient();
-            var response = await client.GetAsync(CurrencyRateApiUrl);
+            var response = await client.GetAsync(GetUlr(time));
             var content = await response.Content.ReadAsStringAsync();
             
             var list = JsonConvert.DeserializeObject<List<CurrencyRate>>(content);
@@ -24,7 +27,7 @@ namespace CurrencyExсhanger.Web.Services
             list.Add(new CurrencyRate()
             {
                 Cc = "UAH",
-                ExchangeDate = (DateTime.Now).ToString(),
+                ExchangeDate = list.First().ExchangeDate,
                 Rate = 1,
                 Txt = "Гривня"
             });
@@ -34,7 +37,7 @@ namespace CurrencyExсhanger.Web.Services
 
         public async Task<List<string>> GetCurrenciesCodeAsync()
         {
-            var listOfRates = await GetRatesAsync();
+            var listOfRates = await GetRatesAsync(DateTime.Now);
 
             var listOfCC = new List<string>();
 
@@ -44,6 +47,17 @@ namespace CurrencyExсhanger.Web.Services
             }
 
             return listOfCC.ToList();
+        }
+
+        public string GetUlr(DateTime time)
+        {
+            var uFormatTime = time.ToString("u");
+
+            var str= uFormatTime.Remove(10,uFormatTime.Length-10);
+
+            var url = $"https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange?date={str.Replace("-", "")}&json";
+           
+            return url;
         }
     }
 }

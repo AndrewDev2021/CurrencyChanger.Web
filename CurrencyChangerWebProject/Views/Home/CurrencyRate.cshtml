@@ -2,12 +2,16 @@
 
 @{
     ViewData["Title"] = "Currency Rate";
-    ViewBag.Date = Model[0].ExchangeDate;
+    ViewBag.Date = @Model.Count > 0 ? Model[0].ExchangeDate : "--.--.----";
 }
 
-<div class="rate-title">
+    <div class="rate-title">
     <h5>The exchange rate against the UAN of @ViewBag.Date</h5>
 </div>
+<form asp-controller="Home" asp-action="CurrencyRate">
+    <p>Выберите дату: <input type="date" name="date">
+    <button type="submit">Search</button>
+</form>
 <table>
     <caption class="caption-col">
         Currency Rate
@@ -18,7 +22,7 @@
     @foreach (var item in Model)
     {
         <tr>
-            <td>@item.Txt</td> <td>@item.Cc</td> <td>@item.Rate</td>
+            <td>@item.Txt</td> <td>@item.Cc</td> <td>@Math.Round(item.Rate,3)</td>
         </tr>
     }
 </table>

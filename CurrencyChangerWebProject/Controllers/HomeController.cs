@@ -44,8 +44,18 @@ namespace CurrencyExсhanger.Web.Controllers
         [Route("/rate")]
         public async Task<IActionResult> CurrencyRate()
         {
-            var listOfRates = await _currencyRateService.GetRatesAsync();
+            var listOfRates = await _currencyRateService.GetRatesAsync(DateTime.Now);
             
+            return View(listOfRates);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Route("/rate")]
+        public async Task<IActionResult> CurrencyRate(DateTime date)
+        {
+            var listOfRates = await _currencyRateService.GetRatesAsync(date);
+
             return View(listOfRates);
         }
     }

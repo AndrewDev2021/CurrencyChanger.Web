@@ -40,7 +40,7 @@ namespace CurrencyExсhanger.Web.Controllers
                 item.Email == User.Identity.Name);
             data.UserId = user.Id;
 
-            var currenciesRate = await _currencyRateService.GetRatesAsync();
+            var currenciesRate = await _currencyRateService.GetRatesAsync(DateTime.Now);
 
             var currentCurrencyObj = currenciesRate.First(item =>
                 item.Cc == data.CurrentCurrencyСС);
@@ -66,7 +66,11 @@ namespace CurrencyExсhanger.Web.Controllers
         [Route("/show/exchanges")]
         public IActionResult ShowExchange()
         {
-            var list = _context.ExchangeHistories.Select(u => u).ToList();
+            var user = _context.Users.First(item =>
+                item.Email == User.Identity.Name);
+
+            var list = _context.ExchangeHistories.Where(item =>
+                item.UserId == user.Id).ToList();
 
             return View(list);
         }

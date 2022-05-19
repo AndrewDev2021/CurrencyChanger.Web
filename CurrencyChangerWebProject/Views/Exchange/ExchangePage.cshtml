@@ -3,7 +3,7 @@
 @{
     ViewData["Title"] = "Exchanger";
 
-        var currencyRateService = new CurrencyRateService();
+    var currencyRateService = new CurrencyRateService();
 
     var listOfCurrencyCode = await currencyRateService.GetCurrenciesCodeAsync();
 }
