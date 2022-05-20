@@ -1,0 +1,13 @@
+﻿@model List<ContactUs>
+
+@{
+    ViewData["Title"] = "Currency Rate";
+}
+
+@foreach (var item in Model)
+{
+    <p>@item.Id</p>
+    <p>@item.Name</p>
+    <p>@item.Email</p>
+    <p>@item.Message</p>
+}

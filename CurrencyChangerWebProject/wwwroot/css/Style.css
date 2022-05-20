@@ -210,3 +210,9 @@ tr:nth-child(even) {
     color: white;
     border-radius: 5px;
 }
+
+.contact-image {
+    height: 170px;
+    width: 100%;
+    background-size: cover;
+}

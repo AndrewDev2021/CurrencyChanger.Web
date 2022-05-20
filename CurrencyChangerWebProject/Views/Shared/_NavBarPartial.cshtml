@@ -5,7 +5,7 @@
             @if (!User.Identity.IsAuthenticated)
             {
                 <div class="navbar-nav">
-                    <a class="nav-link" asp-controller="Home" asp-action="About">About</a>
+                    <a class="nav-link" asp-controller="Home" asp-action="ContactUs">ContactUs</a>
                     <div class="navbar-nav" id="reg-log">
                         <div class="btn-reg">
                             <a asp-controller="Account" asp-action="Register" class="nav-link">Registration</a>
@@ -21,7 +21,7 @@
                 <div class="navbar-nav">
                     <a class="nav-link" asp-controller="Home" asp-action="CurrencyRate">Current Rate</a>
                     <a class="nav-link" asp-controller="Exchange" asp-action="ExchangesHistory">Exchanges History</a>
-                    <a class="nav-link" asp-controller="Home" asp-action="About">About</a>
+                    <a class="nav-link" asp-controller="Home" asp-action="ContactUs">ContactUs</a>
                     <div id="reg-log" class="btn-login">
                         <a asp-controller="Account" asp-action="Logout" class="nav-link">Log Out</a>
                     </div>

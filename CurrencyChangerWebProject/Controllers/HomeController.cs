@@ -3,8 +3,10 @@ using CurrencyExсhanger.Web.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using CurrencyExсhanger.Web.Model;
 
 namespace CurrencyExсhanger.Web.Controllers
 {
@@ -63,9 +65,39 @@ namespace CurrencyExсhanger.Web.Controllers
 
         [HttpGet]
         [Route("/about")]
-        public IActionResult About()
+        public IActionResult ContactUs()
         {
             return View();
+        }
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Route("/about")]
+        public async Task<IActionResult> ContactUs(ContactUs data)
+        {
+            if (ModelState.IsValid)
+            {
+                await _context.ContactUsMessages.AddAsync(data);
+                await _context.SaveChangesAsync();
+
+                return RedirectToAction("HomePage", "Home");
+            }
+
+            return View();
+        }
+
+        [HttpGet]
+        [Authorize]
+        [Route("/show/cont")]
+        public IActionResult ShowMessage()
+        {
+            if (!_context.ContactUsMessages.Any())
+                return View(new List<ContactUs>());
+
+            var list = _context.ContactUsMessages.Select(item => item).ToList();
+
+            return View(list);
         }
     }
 }

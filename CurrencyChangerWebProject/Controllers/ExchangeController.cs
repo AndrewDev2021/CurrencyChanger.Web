@@ -4,6 +4,7 @@ using CurrencyExсhanger.Web.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -66,6 +67,9 @@ namespace CurrencyExсhanger.Web.Controllers
         [Route("/history/exchanges")]
         public IActionResult ExchangesHistory()
         {
+            if (!_context.Users.Any())
+                return View(new List<ExchangeHistory>());
+
             var user = _context.Users.First(item =>
                 item.Email == User.Identity.Name);
 
@@ -75,18 +79,14 @@ namespace CurrencyExсhanger.Web.Controllers
             return View(list);
         }
 
-        private decimal ExchangeRate(decimal currentCurrencyRate, decimal disireCurrencyRate)
+        private decimal ExchangeRate(decimal currentCurrencyRate, decimal desireCurrencyRate)
         {
-            var result = currentCurrencyRate / disireCurrencyRate;
-
-            return result;
+            return currentCurrencyRate / desireCurrencyRate;
         }
 
         private decimal ExchangeResult(decimal currentCurrencyValue, decimal rate)
         {
-            var result = Math.Round(currentCurrencyValue * rate, 2);
-
-            return result;
+            return Math.Round(currentCurrencyValue * rate, 2);
         }
     }
 }

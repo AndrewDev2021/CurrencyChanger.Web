@@ -1,0 +1,37 @@
+﻿@model ContactUs
+
+@{
+    ViewData["Title"] = "Contact Us";
+}
+<div class="container">
+    <div class="row">
+        <div class="col-sm text-center">
+            <h1 class="div-heading display-4">Contact Us</h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <form asp-controller="Home" asp-action="ContactUs">
+                <div class="form-group">
+                    <input type="text" asp-for="Name" class="form-control" id="exampleInputName" placeholder="Enter you Name">
+                </div>
+                <div class="form-group">
+                    <input type="email" asp-for="Email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter your Email Address">
+                </div>
+                <div class="form-group">
+                    <textarea class="form-control" asp-for="Message" aria-label="With textarea"></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary btn-lg btn-block">Send</button>
+            </form>
+        </div>
+        <div  class="col-md-6">
+            <h5>Address: <small class="text-muted">Venkatadri IT Park, HP Avenue, Konnappana, Electronic city, Bengaluru, Karnataka 560069</small></h5>
+            <h5>Email: <small class="text-muted">hire@luxurytaxicab.com</small></h5>
+            <h5>Contact: <small class="text-muted">+91 98765 10278 || +91 76589 14244</small></h5>
+            <div class="text-center">
+                <img class="img-fluid contact-image" alt="Responsive image" src="https://csds.qld.edu.au/sdc/resources/images/find-us-map.jpg" class="rounded">
+            </div>
+        </div>
+        
+    </div>
+</div>
