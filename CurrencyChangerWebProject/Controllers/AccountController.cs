@@ -38,12 +38,13 @@ namespace CurrencyExсhanger.Web.Controllers
             if (!ModelState.IsValid)
                 return View(data);
 
-            var user = await _context.Users.FirstOrDefaultAsync(u => 
-                u.Email == data.Email && u.Password == HashingService.GetHashString(data.Password));
+            var user = await _context.Users
+                .Include(u => u.FK_Role_Id)
+                .FirstOrDefaultAsync(u => u.Email == data.Email && u.Password == HashingService.GetHashString(data.Password));
 
             if (user != null)
             {
-                await Authenticate(data.Email); // аутентификация
+                await Authenticate(user);
 
                 return RedirectToAction("HomePage", "Home");
             }
@@ -79,12 +80,13 @@ namespace CurrencyExсhanger.Web.Controllers
                     FirstName = data.LastName,
                     LastName = data.LastName,
                     Age = data.Age,
-                    Password = HashingService.GetHashString(data.Password)
-                };
+                    Password = HashingService.GetHashString(data.Password),
+                    FK_Role_Id = await _context.Roles.FirstOrDefaultAsync(r => r.Name == "user")
+            };
 
                 await _context.Users.AddAsync(user);
                 await _context.SaveChangesAsync();
-                await Authenticate(data.Email);
+                await Authenticate(user);
 
                 return RedirectToAction("HomePage", "Home");
             }
@@ -112,11 +114,12 @@ namespace CurrencyExсhanger.Web.Controllers
 
         #region Authenticate
 
-        private async Task Authenticate(string userName)
+        private async Task Authenticate(User user)
         {
             var claims = new List<Claim>
             {
-                new Claim(ClaimsIdentity.DefaultNameClaimType, userName)
+                new(ClaimsIdentity.DefaultNameClaimType, user.Email),
+                new(ClaimsIdentity.DefaultRoleClaimType, user.FK_Role_Id.Name)
             };
  
             ClaimsIdentity id = new ClaimsIdentity(claims, "ApplicationCookie", ClaimsIdentity.DefaultNameClaimType, ClaimsIdentity.DefaultRoleClaimType);

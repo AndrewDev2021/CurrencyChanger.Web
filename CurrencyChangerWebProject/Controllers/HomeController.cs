@@ -84,7 +84,7 @@ namespace CurrencyExсhanger.Web.Controllers
         }
 
         [HttpGet]
-        [Authorize]
+        [Authorize(Roles = "admin")]
         [Route("/show/message")]
         public IActionResult ShowMessage()
         {

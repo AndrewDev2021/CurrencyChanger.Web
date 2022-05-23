@@ -1,10 +1,11 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace CurrencyExсhanger.Web.Model
 {
+    [NotMapped]
     public class RegisterModel
     {
-        [Key]
         public int Id { get; set; }
 
         [Display(Name = "Email Address")]

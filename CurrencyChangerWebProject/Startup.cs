@@ -26,7 +26,12 @@ namespace CurrencyExñhanger.Web
             services.AddDbContext<AppDbContext>(options => options.UseNpgsql(connection));
 
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
-                .AddCookie(options => options.LoginPath = "/login");
+                .AddCookie(options =>
+                {
+                    options.LoginPath = new PathString("/login");
+                    options.AccessDeniedPath = new PathString("/login");
+                });
+
             services.AddAuthorization();
             services.AddMvc();
         }
@@ -47,7 +52,7 @@ namespace CurrencyExñhanger.Web
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapControllerRoute("default", "{controller=Home}/{action=HomePage}/{id?}");
+                endpoints.MapControllerRoute("default", "{controller=Home}/{action=HomePage}");
             });
         }
     }

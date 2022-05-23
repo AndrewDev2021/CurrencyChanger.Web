@@ -10,8 +10,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace CurrencyExсhanger.Web.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20220523161712_InitDb")]
-    partial class InitDb
+    [Migration("20220523191030_InitDB")]
+    partial class InitDB
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -78,46 +78,35 @@ namespace CurrencyExсhanger.Web.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("UserId");
-
                     b.ToTable("ExchangeHistories");
                 });
 
-            modelBuilder.Entity("CurrencyExсhanger.Web.Model.RegisterModel", b =>
+            modelBuilder.Entity("CurrencyExсhanger.Web.Model.Role", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer")
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
-                    b.Property<int>("Age")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("ConfirmPassword")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("FirstName")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("character varying(50)");
-
-                    b.Property<string>("LastName")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("character varying(50)");
-
-                    b.Property<string>("Password")
+                    b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("text");
 
                     b.HasKey("Id");
 
-                    b.ToTable("RegisterModel");
+                    b.ToTable("Roles");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "admin"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "user"
+                        });
                 });
 
             modelBuilder.Entity("CurrencyExсhanger.Web.Model.User", b =>
@@ -146,20 +135,37 @@ namespace CurrencyExсhanger.Web.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
+                    b.Property<int>("RoleId")
+                        .HasColumnType("integer");
+
                     b.HasKey("Id");
 
+                    b.HasIndex("RoleId");
+
                     b.ToTable("Users");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Age = 33,
+                            Email = "Example@gmail.com",
+                            FirstName = "Bill",
+                            LastName = "Tomson",
+                            Password = "5d39f9abff7803de08ef05e024692c4a",
+                            RoleId = 1
+                        });
                 });
 
-            modelBuilder.Entity("CurrencyExсhanger.Web.Model.ExchangeHistory", b =>
+            modelBuilder.Entity("CurrencyExсhanger.Web.Model.User", b =>
                 {
-                    b.HasOne("CurrencyExсhanger.Web.Model.RegisterModel", "FK_User_Id")
+                    b.HasOne("CurrencyExсhanger.Web.Model.Role", "FK_Role_Id")
                         .WithMany()
-                        .HasForeignKey("UserId")
+                        .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("FK_User_Id");
+                    b.Navigation("FK_Role_Id");
                 });
 #pragma warning restore 612, 618
         }
