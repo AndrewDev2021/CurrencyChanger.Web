@@ -1,4 +1,4 @@
-# Currency Exchanger**
+# Currency Exchanger
 Web project with using Backend Technology : ASP.NET Core MVC , Entity Framework, PostreSQL Server. Frontend Technology : HTML , CSS , Bootstrap 5
 
 #### **The layout is not responsive. It is recommended to use on a scale of 100-125%. The main task in the development of deepening back-end skills**
