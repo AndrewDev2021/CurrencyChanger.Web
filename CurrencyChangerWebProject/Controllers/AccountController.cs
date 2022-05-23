@@ -33,20 +33,21 @@ namespace CurrencyExсhanger.Web.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Route("/login")]
-        public async Task<IActionResult> Login(LogIn data)
+        public async Task<IActionResult> Login(LogInModel data)
         {
-            if (ModelState.IsValid)
-            {
-                var user = await _context.Users.FirstOrDefaultAsync(u => u.Email == data.Email
-                    && u.Password == HashingService.GetHashString(data.Password));
-                if (user != null)
-                {
-                    await Authenticate(data.Email); // аутентификация
+            if (!ModelState.IsValid)
+                return View(data);
 
-                    return RedirectToAction("HomePage", "Home");
-                }
-                ModelState.AddModelError("", "Incorrect username or password");
+            var user = await _context.Users.FirstOrDefaultAsync(u => 
+                u.Email == data.Email && u.Password == HashingService.GetHashString(data.Password));
+
+            if (user != null)
+            {
+                await Authenticate(data.Email); // аутентификация
+
+                return RedirectToAction("HomePage", "Home");
             }
+            ModelState.AddModelError("", "Incorrect username or password");
             return View(data);
         }
 
@@ -64,25 +65,32 @@ namespace CurrencyExсhanger.Web.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Route("/registration")]
-        public async Task<IActionResult> Register(Registation data)
+        public async Task<IActionResult> Register(RegisterModel data)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid) 
+                return View(data);
+
+            var userCheck = await _context.Users.FirstOrDefaultAsync(u => u.Email == data.Email);
+            if (userCheck == null)
             {
-                var user = await _context.Users.FirstOrDefaultAsync(u => u.Email == data.Email);
-                if (user == null)
+                var user = new User()
                 {
-                    data.Password = HashingService.GetHashString(data.Password);
+                    Email = data.Email,
+                    FirstName = data.LastName,
+                    LastName = data.LastName,
+                    Age = data.Age,
+                    Password = HashingService.GetHashString(data.Password)
+                };
 
-                    await _context.Users.AddAsync(data);
-                    await _context.SaveChangesAsync();
-                    await Authenticate(data.Email);
+                await _context.Users.AddAsync(user);
+                await _context.SaveChangesAsync();
+                await Authenticate(data.Email);
 
-                    return RedirectToAction("HomePage", "Home");
-                }
-                else
-                {
-                    ModelState.AddModelError("", "There is already a user with this email");
-                }
+                return RedirectToAction("HomePage", "Home");
+            }
+            else
+            {
+                ModelState.AddModelError("", "There is already a user with this email");
             }
 
             return View(data);

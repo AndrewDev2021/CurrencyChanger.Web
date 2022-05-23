@@ -10,8 +10,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace CurrencyExсhanger.Web.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20220520181111_InitDB")]
-    partial class InitDB
+    [Migration("20220523161712_InitDb")]
+    partial class InitDb
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -83,7 +83,7 @@ namespace CurrencyExсhanger.Web.Migrations
                     b.ToTable("ExchangeHistories");
                 });
 
-            modelBuilder.Entity("CurrencyExсhanger.Web.Model.Registation", b =>
+            modelBuilder.Entity("CurrencyExсhanger.Web.Model.RegisterModel", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -117,12 +117,43 @@ namespace CurrencyExсhanger.Web.Migrations
 
                     b.HasKey("Id");
 
+                    b.ToTable("RegisterModel");
+                });
+
+            modelBuilder.Entity("CurrencyExсhanger.Web.Model.User", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<int>("Age")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("FirstName")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("LastName")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
                     b.ToTable("Users");
                 });
 
             modelBuilder.Entity("CurrencyExсhanger.Web.Model.ExchangeHistory", b =>
                 {
-                    b.HasOne("CurrencyExсhanger.Web.Model.Registation", "FK_User_Id")
+                    b.HasOne("CurrencyExсhanger.Web.Model.RegisterModel", "FK_User_Id")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)

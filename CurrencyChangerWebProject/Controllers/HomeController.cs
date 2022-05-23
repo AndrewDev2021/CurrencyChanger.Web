@@ -29,7 +29,6 @@ namespace CurrencyExсhanger.Web.Controllers
                 return RedirectToAction("ExchangePage", "Exchange");
 
             return View();
-
         }
 
         [HttpGet]
@@ -37,10 +36,9 @@ namespace CurrencyExсhanger.Web.Controllers
         [Route("/show")]
         public IActionResult ShowUsers()
         {
-            var users = _context.Users.Select(u => u).ToList();
+            var users = _context.Users.ToList();
 
             return View(users);
-
         }
 
         [HttpGet]
@@ -76,26 +74,24 @@ namespace CurrencyExсhanger.Web.Controllers
         [Route("/about")]
         public async Task<IActionResult> ContactUs(ContactUs data)
         {
-            if (ModelState.IsValid)
-            {
-                await _context.ContactUsMessages.AddAsync(data);
-                await _context.SaveChangesAsync();
+            if (!ModelState.IsValid)
+                return View();
 
-                return RedirectToAction("HomePage", "Home");
-            }
+            await _context.ContactUsMessages.AddAsync(data);
+            await _context.SaveChangesAsync();
 
-            return View();
+            return RedirectToAction("HomePage", "Home");
         }
 
         [HttpGet]
         [Authorize]
-        [Route("/show/cont")]
+        [Route("/show/message")]
         public IActionResult ShowMessage()
         {
             if (!_context.ContactUsMessages.Any())
                 return View(new List<ContactUs>());
 
-            var list = _context.ContactUsMessages.Select(item => item).ToList();
+            var list = _context.ContactUsMessages.ToList();
 
             return View(list);
         }

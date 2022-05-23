@@ -2,7 +2,7 @@
 
 namespace CurrencyExсhanger.Web.Model
 {
-    public class Registation
+    public class RegisterModel
     {
         [Key]
         public int Id { get; set; }

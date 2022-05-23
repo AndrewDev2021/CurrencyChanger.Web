@@ -49,17 +49,16 @@ namespace CurrencyExсhanger.Web.Controllers
                 item.Cc == data.DesiredСurrencyСС);
 
             data.RateOfExchange = Math.Round(ExchangeRate(currentCurrencyObj.Rate, desireCurrencyObj.Rate), 4);
-            if (ModelState.IsValid)
-            {
-                data.DesireCurrencyValue = ExchangeResult(data.CurrentCurrencyValue, data.RateOfExchange);
+           
+            if (!ModelState.IsValid)
+                return View(data);
 
-                await _context.ExchangeHistories.AddAsync(data);
-                await _context.SaveChangesAsync();
+            data.DesireCurrencyValue = ExchangeResult(data.CurrentCurrencyValue, data.RateOfExchange);
 
-                return View("SuccessfulExchange", data);
-            }
+            await _context.ExchangeHistories.AddAsync(data);
+            await _context.SaveChangesAsync();
 
-            return View(data);
+            return View("SuccessfulExchange", data);
         }
 
         [HttpGet]

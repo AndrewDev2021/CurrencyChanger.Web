@@ -14,7 +14,7 @@ namespace CurrencyExсhanger.Web.Model
         public int UserId { get; set; }
         
         [ForeignKey("UserId")]
-        public Registation FK_User_Id { get; set; }
+        public RegisterModel FK_User_Id { get; set; }
 
         [Required]
 

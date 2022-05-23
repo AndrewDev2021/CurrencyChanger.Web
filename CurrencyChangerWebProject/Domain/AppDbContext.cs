@@ -6,7 +6,7 @@ namespace CurrencyExсhanger.Web.Domain
 {
     public class AppDbContext: DbContext
     {
-        public DbSet<Registation> Users { get; set; }
+        public DbSet<User> Users { get; set; }
         public DbSet<ExchangeHistory> ExchangeHistories { get; set; }
         public DbSet<ContactUs> ContactUsMessages { get; set; }
 
