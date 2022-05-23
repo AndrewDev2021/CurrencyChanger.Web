@@ -33,21 +33,11 @@ namespace CurrencyExсhanger.Web.Controllers
 
         [HttpGet]
         [Authorize]
-        [Route("/show")]
-        public IActionResult ShowUsers()
-        {
-            var users = _context.Users.ToList();
-
-            return View(users);
-        }
-
-        [HttpGet]
-        [Authorize]
         [Route("/rate")]
         public async Task<IActionResult> CurrencyRate()
         {
             var listOfRates = await _currencyRateService.GetRatesAsync(DateTime.Now);
-
+            
             return View(listOfRates);
         }
 

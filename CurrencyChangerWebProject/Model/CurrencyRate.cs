@@ -1,7 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.Text.Json.Serialization;
-
-namespace CurrencyExсhanger.Web.Model
+﻿namespace CurrencyExсhanger.Web.Model
 {
     public class CurrencyRate
     {

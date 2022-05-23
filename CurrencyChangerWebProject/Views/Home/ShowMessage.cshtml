@@ -4,10 +4,21 @@
     ViewData["Title"] = "Currency Rate";
 }
 
+<div class="accordion" id="accordionExample">
 @foreach (var item in Model)
 {
-    <p>@item.Id</p>
-    <p>@item.Name</p>
-    <p>@item.Email</p>
-    <p>@item.Message</p>
+    <div class="accordion-item">
+        <h2 class="accordion-header" id="headingOne">
+            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                Message #@item.Id
+            </button>
+        </h2>
+        <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+            <div class="accordion-body">
+                <h5>@item.Name</h5>
+                <strong>[@item.Email]</strong>@item.Message
+            </div>
+        </div>
+    </div>
 }
+</div>

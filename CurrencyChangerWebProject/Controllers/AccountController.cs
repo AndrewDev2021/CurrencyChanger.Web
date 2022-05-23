@@ -48,7 +48,9 @@ namespace CurrencyExсhanger.Web.Controllers
 
                 return RedirectToAction("HomePage", "Home");
             }
+
             ModelState.AddModelError("", "Incorrect username or password");
+
             return View(data);
         }
 
@@ -82,7 +84,7 @@ namespace CurrencyExсhanger.Web.Controllers
                     Age = data.Age,
                     Password = HashingService.GetHashString(data.Password),
                     FK_Role_Id = await _context.Roles.FirstOrDefaultAsync(r => r.Name == "user")
-            };
+                };
 
                 await _context.Users.AddAsync(user);
                 await _context.SaveChangesAsync();
@@ -90,10 +92,8 @@ namespace CurrencyExсhanger.Web.Controllers
 
                 return RedirectToAction("HomePage", "Home");
             }
-            else
-            {
-                ModelState.AddModelError("", "There is already a user with this email");
-            }
+
+            ModelState.AddModelError("", "There is already a user with this email");
 
             return View(data);
         }

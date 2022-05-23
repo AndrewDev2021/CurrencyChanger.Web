@@ -4,11 +4,37 @@
     ViewData["Title"] = "Successful";
 }
 
-<h1>Infomation about exchange</h1>
-<p>UserId: @Model.UserId</p>
-<p>RateOfExchange :@Model.RateOfExchange</p>
-<p>CurrentCurrencyСС :@Model.CurrentCurrencyСС</p>
-<p>CurrentCurrencyValue :@Model.CurrentCurrencyValue</p>
-<p>DesiredСurrencyСС: @Model.DesiredСurrencyСС</p>
-<p>DesireCurrencyValue: @Model.DesireCurrencyValue</p>
-<p>@Model.time</p>
+<div class="receipt">
+    <header class="receipt__header">
+        <p class="receipt__title">
+            Exchange successful
+        </p>
+        <p class="receipt__date">@Model.time</p>
+    </header>
+    <dl class="receipt__list">
+        <div class="receipt__list-row">
+            <dt class="receipt__item">User Id</dt>
+            <dd class="receipt__cost">@Model.UserId</dd>
+        </div>
+        <div class="receipt__list-row">
+            <dt class="receipt__item">Current Currency Сode</dt>
+            <dd class="receipt__cost">@Model.CurrentCurrencyСС</dd>
+        </div>
+        <div class="receipt__list-row">
+            <dt class="receipt__item">Current Currency Value</dt>
+            <dd class="receipt__cost">@Model.CurrentCurrencyValue</dd>
+        </div>
+        <div class="receipt__list-row">
+            <dt class="receipt__item">Desired Сurrency Сode</dt>
+            <dd class="receipt__cost">@Model.DesiredСurrencyСС</dd>
+        </div>
+        <div class="receipt__list-row">
+            <dt class="receipt__item">Rate Of Exchange</dt>
+            <dd class="receipt__cost">@Model.RateOfExchange</dd>
+        </div>
+        <div class="receipt__list-row receipt__list-row--total">
+            <dt class="receipt__item">Result Of Exchange</dt>
+            <dd class="receipt__cost">@Model.DesireCurrencyValue @Model.DesiredСurrencyСС</dd>
+        </div>
+    </dl>
+</div>

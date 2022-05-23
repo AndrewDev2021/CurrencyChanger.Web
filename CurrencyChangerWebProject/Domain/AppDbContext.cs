@@ -1,8 +1,5 @@
 ﻿using CurrencyExсhanger.Web.Model;
-using CurrencyExсhanger.Web.Services;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.VisualStudio.Web.CodeGeneration.EntityFrameworkCore;
-using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace CurrencyExсhanger.Web.Domain
 {
