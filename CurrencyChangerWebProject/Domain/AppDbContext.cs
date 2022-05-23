@@ -1,4 +1,5 @@
 ﻿using CurrencyExсhanger.Web.Model;
+using CurrencyExсhanger.Web.Services;
 using Microsoft.EntityFrameworkCore;
 
 namespace CurrencyExсhanger.Web.Domain
@@ -15,11 +16,7 @@ namespace CurrencyExсhanger.Web.Domain
             Database.EnsureCreatedAsync();
         }
 
-        /*If you delete migrations , uncomment the function "OnModelCreating" and call
-         "Add-migration [name]" and comment out back, then use "Update-database"*/
-
-
-        /*protected override void OnModelCreating(ModelBuilder modelBuilder)
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             var adminRole = new Role()
             {
@@ -49,6 +46,6 @@ namespace CurrencyExсhanger.Web.Domain
 
             modelBuilder.Entity<User>()
                 .HasData(admin);
-        }*/
+        }
     }
 }
