@@ -1,24 +1,17 @@
-﻿using System.Collections.Generic;
-using System.Security.Claims;
-using System.Threading.Tasks;
-using CurrencyExсhanger.Web.Domain;
-using CurrencyExсhanger.Web.Model;
+﻿using CurrencyExсhanger.Web.Model;
 using CurrencyExсhanger.Web.Services;
-using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
+using System.Threading.Tasks;
 
 namespace CurrencyExсhanger.Web.Controllers
 {
     public class AccountController : Controller
     {
-        private readonly AppDbContext _context;
-
-        public AccountController(AppDbContext context)
+        private readonly IAuthService _authService;
+        public AccountController(IAuthService authService)
         {
-            _context = context;
+            _authService = authService;
         }
 
         #region LogIn-Action
@@ -27,6 +20,8 @@ namespace CurrencyExсhanger.Web.Controllers
         [Route("/login")]
         public IActionResult LogIn()
         {
+            if (User.Identity.IsAuthenticated)
+                return RedirectToAction("HomePage", "Home");
             return View();
         }
 
@@ -35,21 +30,17 @@ namespace CurrencyExсhanger.Web.Controllers
         [Route("/login")]
         public async Task<IActionResult> Login(LogInModel data)
         {
+            if (User.Identity.IsAuthenticated)
+                return RedirectToAction("HomePage", "Home");
+
             if (!ModelState.IsValid)
                 return View(data);
 
-            var user = await _context.Users
-                .Include(u => u.FK_Role_Id)
-                .FirstOrDefaultAsync(u => u.Email == data.Email && u.Password == HashingService.GetHashString(data.Password));
-
-            if (user != null)
-            {
-                await Authenticate(user);
-
+            var result = await _authService.LogInAsync(data);
+            if (result == null)
                 return RedirectToAction("HomePage", "Home");
-            }
 
-            ModelState.AddModelError("", "Incorrect username or password");
+            ModelState.AddModelError("", result);
 
             return View(data);
         }
@@ -62,6 +53,8 @@ namespace CurrencyExсhanger.Web.Controllers
         [Route("/registration")]
         public IActionResult Register()
         {
+            if (User.Identity.IsAuthenticated)
+                return RedirectToAction("HomePage", "Home");
             return View();
         }
 
@@ -70,31 +63,17 @@ namespace CurrencyExсhanger.Web.Controllers
         [Route("/registration")]
         public async Task<IActionResult> Register(RegisterModel data)
         {
-            if (!ModelState.IsValid) 
+            if (User.Identity.IsAuthenticated)
+                return RedirectToAction("HomePage", "Home");
+
+            if (!ModelState.IsValid)
                 return View(data);
 
-            var userCheck = await _context.Users.FirstOrDefaultAsync(u => u.Email == data.Email);
-            if (userCheck == null)
-            {
-                var user = new User()
-                {
-                    Email = data.Email,
-                    FirstName = data.LastName,
-                    LastName = data.LastName,
-                    Age = data.Age,
-                    Password = HashingService.GetHashString(data.Password),
-                    FK_Role_Id = await _context.Roles.FirstOrDefaultAsync(r => r.Name == "user")
-                };
-
-                await _context.Users.AddAsync(user);
-                await _context.SaveChangesAsync();
-                await Authenticate(user);
-
+            var result = await _authService.RegisterAsync(data);
+            if (result == null)
                 return RedirectToAction("HomePage", "Home");
-            }
 
-            ModelState.AddModelError("", "There is already a user with this email");
-
+            ModelState.AddModelError("", result);
             return View(data);
         }
 
@@ -106,25 +85,10 @@ namespace CurrencyExсhanger.Web.Controllers
         [Authorize]
         public async Task<IActionResult> Logout()
         {
-            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            if (!User.Identity.IsAuthenticated)
+                return RedirectToAction("LogIn", "Account");
+            await _authService.LogoutAsync();
             return RedirectToAction("HomePage", "Home");
-        }
-
-        #endregion
-
-        #region Authenticate
-
-        private async Task Authenticate(User user)
-        {
-            var claims = new List<Claim>
-            {
-                new(ClaimsIdentity.DefaultNameClaimType, user.Email),
-                new(ClaimsIdentity.DefaultRoleClaimType, user.FK_Role_Id.Name)
-            };
- 
-            ClaimsIdentity id = new ClaimsIdentity(claims, "ApplicationCookie", ClaimsIdentity.DefaultNameClaimType, ClaimsIdentity.DefaultRoleClaimType);
-
-            await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(id));
         }
 
         #endregion

@@ -1,13 +1,13 @@
 ﻿using System.Security.Cryptography;
 using System.Text;
 
-namespace CurrencyExсhanger.Web.Services
+namespace CurrencyExсhanger.Web.Extensions
 {
-    public class HashingService
+    public static class StringExtensions
     {
-        public static string GetHashString(string password)
+        public static string GetHash(this string item)
         {
-            byte[] bytes = Encoding.Unicode.GetBytes(password);
+            byte[] bytes = Encoding.Unicode.GetBytes(item);
 
             MD5CryptoServiceProvider CSP =
                 new MD5CryptoServiceProvider();
