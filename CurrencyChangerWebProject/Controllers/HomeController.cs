@@ -1,24 +1,23 @@
 ﻿using CurrencyExсhanger.Web.Domain;
+using CurrencyExсhanger.Web.Model;
 using CurrencyExсhanger.Web.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-using CurrencyExсhanger.Web.Model;
 
 namespace CurrencyExсhanger.Web.Controllers
 {
     public class HomeController : Controller
     {
         private AppDbContext _context;
-        private CurrencyRateService _currencyRateService;
+        private ICurrencyRateService _currencyRateService;
 
-        public HomeController(AppDbContext context)
+        public HomeController(AppDbContext context, ICurrencyRateService currencyRateService)
         {
             _context = context;
-            _currencyRateService = new CurrencyRateService();
+            _currencyRateService = currencyRateService;
         }
 
         [HttpGet]
@@ -36,9 +35,7 @@ namespace CurrencyExсhanger.Web.Controllers
         [Route("/rate")]
         public async Task<IActionResult> CurrencyRate()
         {
-            var listOfRates = await _currencyRateService.GetRatesAsync(DateTime.Now);
-            
-            return View(listOfRates);
+            return View(await _currencyRateService.GetRatesAsync(DateTime.Now));
         }
 
         [HttpPost]
@@ -46,9 +43,7 @@ namespace CurrencyExсhanger.Web.Controllers
         [Route("/rate")]
         public async Task<IActionResult> CurrencyRate(DateTime date)
         {
-            var listOfRates = await _currencyRateService.GetRatesAsync(date);
-
-            return View(listOfRates);
+            return View(await _currencyRateService.GetRatesAsync(date));
         }
 
         [HttpGet]
@@ -76,14 +71,9 @@ namespace CurrencyExсhanger.Web.Controllers
         [HttpGet]
         [Authorize(Roles = "admin")]
         [Route("/show/message")]
-        public IActionResult ShowMessage()
+        public async Task<IActionResult> ShowMessage()
         {
-            if (!_context.ContactUsMessages.Any())
-                return View(new List<ContactUs>());
-
-            var list = _context.ContactUsMessages.ToList();
-
-            return View(list);
+            return View(await _context.ContactUsMessages.ToListAsync());
         }
     }
 }

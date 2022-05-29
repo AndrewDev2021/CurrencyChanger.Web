@@ -1,4 +1,5 @@
 using CurrencyExñhanger.Web.Domain;
+using CurrencyExñhanger.Web.Services;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -24,6 +25,12 @@ namespace CurrencyExñhanger.Web
         {
             string connection = Configuration.GetConnectionString("DefaultConnection");
             services.AddDbContext<AppDbContext>(options => options.UseNpgsql(connection));
+
+            services.AddHttpClient();
+            services.AddHttpContextAccessor();
+
+            services.AddSingleton<ICurrencyRateService, CurrencyRateService>();
+            services.AddScoped<IAuthService, AuthService>();
 
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
                 .AddCookie(options =>
