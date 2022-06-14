@@ -26,11 +26,12 @@ namespace CurrencyExñhanger.Web
             string connection = Configuration.GetConnectionString("DefaultConnection");
             services.AddDbContext<AppDbContext>(options => options.UseNpgsql(connection));
 
+
+            services.AddScoped<ICurrencyRateService, CurrencyRateService>();
+            services.AddScoped<IAuthService, AuthService>();
+
             services.AddHttpClient();
             services.AddHttpContextAccessor();
-
-            services.AddSingleton<ICurrencyRateService, CurrencyRateService>();
-            services.AddScoped<IAuthService, AuthService>();
 
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
                 .AddCookie(options =>

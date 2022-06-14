@@ -20,8 +20,9 @@ namespace CurrencyExсhanger.Web.Controllers
 
         [HttpGet]
         [Route("/exchange")]
-        public IActionResult ExchangePage()
+        public async Task<IActionResult> ExchangePage()
         {
+            ViewBag.ListOfCC = await _currencyRateService.GetCurrenciesCodeAsync();
             return View();
         }
 

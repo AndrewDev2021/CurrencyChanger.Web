@@ -16,10 +16,10 @@ namespace CurrencyExсhanger.Web.Services
     {
         private readonly AppDbContext _db;
         private readonly HttpContext _httpContext;
-        public AuthService(AppDbContext db, HttpContext httpContext)
+        public AuthService(AppDbContext db, IHttpContextAccessor httpContextAccessor)
         {
             _db = db;
-            _httpContext = httpContext;
+            _httpContext = httpContextAccessor.HttpContext;
         }
 
         public async Task<string> LogInAsync(LogInModel model)

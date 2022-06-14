@@ -2,10 +2,7 @@
 
 @{
     ViewData["Title"] = "Exchanger";
-
-    var currencyRateService = new CurrencyRateService();
-
-    var listOfCurrencyCode = await currencyRateService.GetCurrenciesCodeAsync();
+    var listOfCurrencyCode = ViewBag.ListOfCC as List<string>;
 }
 
 @*<h4 class="heading text-center display-2">

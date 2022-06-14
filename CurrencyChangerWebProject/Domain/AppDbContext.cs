@@ -1,4 +1,5 @@
-﻿using CurrencyExсhanger.Web.Model;
+﻿using CurrencyExсhanger.Web.Extensions;
+using CurrencyExсhanger.Web.Model;
 using CurrencyExсhanger.Web.Services;
 using Microsoft.EntityFrameworkCore;
 
@@ -13,7 +14,7 @@ namespace CurrencyExсhanger.Web.Domain
 
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
         {
-            Database.EnsureCreatedAsync();
+            Database.EnsureCreated();
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -37,7 +38,7 @@ namespace CurrencyExсhanger.Web.Domain
                 LastName = "Tomson",
                 Email = "Example@gmail.com",
                 Age = 33,
-                Password = HashingService.GetHashString("12345Qwerty"),
+                Password = "12345Qwerty".GetHash(),
                 RoleId = adminRole.Id
             };
 
