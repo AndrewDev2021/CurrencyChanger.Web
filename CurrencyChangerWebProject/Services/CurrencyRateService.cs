@@ -61,7 +61,7 @@ namespace CurrencyExсhanger.Web.Services
 
         private string GetUlr(DateTime date)
         {
-            return $"https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange?date={date.ToString("yyyyyMMdd")}&json";
+            return $"https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange?date={date.ToString("yyyyMMdd")}&json";
         }
 
         public async Task<ExchangeHistory> AddExchangeAsync(ExchangeHistory model)
